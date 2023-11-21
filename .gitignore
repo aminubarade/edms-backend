@@ -21,3 +21,12 @@ Homestead.yaml
 Homestead.json
 /.vagrant
 .phpunit.result.cache
+.env.backup
+docker-compose.override.yml
+.env.staging
+/storage
+.env.staging
+.env.example
+package-lock.json
+.rnd
+database/seeders/UserSeeder.php
