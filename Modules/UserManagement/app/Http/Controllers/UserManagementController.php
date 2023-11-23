@@ -14,21 +14,14 @@ use Hash;
 
 class UserManagementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function getUsers()
     {
         //import users
-        //
         $users = User::all();
         return response()->json($users);
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
+    public function saveUser(Request $request)
     {
         //save and return json
         $validated = Validator::make($request->all(),[
@@ -36,8 +29,16 @@ class UserManagementController extends Controller
             'firstname' => 'required',
             'lastname' => 'required',
             'email' =>'required|email',
+            'password' => 'required',
             'phone' =>'required|unique:users|max:11',
-            'password' => 'required'
+            'rank' => 'required',
+            'dob' => 'required',
+            'service_number' => 'required',
+            'appt' => 'required',
+            'service' => 'required',
+            'unit' => 'required',
+            'command' => 'required',
+            'department' => 'required'
         ]);
 
         if($validated->fails()){
@@ -45,13 +46,23 @@ class UserManagementController extends Controller
                 "status" => 422,
                 "message" => $validated->messages()
             ],422);
-        }else{
+        }else
+        {
             $user = new User;
             $user->username = $request->username;
             $user->firstname = $request->firstname;
+            $user->middlename = $request->middlename; //nullable;
             $user->lastname = $request->lastname;
             $user->phone = $request->phone;
             $user->email = $request->email;
+            $user->dob =   date($request->dob,strtotime($request->dob));
+            $user->rank = $request->rank;
+            $user->service_number = $request->service_number;
+            $user->appt = $request->appt;
+            $user->service = $request->service;
+            $user->unit = $request->unit;
+            $user->command = $request->command;
+            $user->department = $request->department;
             $user->password = bcrypt($request->password);
             $user->save();
             return response()->json([
@@ -60,18 +71,12 @@ class UserManagementController extends Controller
         }
     }
 
-    /**
-     * Show the specified resource.
-     */
-    public function show(User $user)
+    public function viewUser(User $user)
     {
         return $user;
     }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, User $user)
+    public function updateUser(Request $request, User $user)
     {
          //
         if($user->username)
@@ -89,10 +94,7 @@ class UserManagementController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
+    public function deleteUser($id)
     {
         if($user->username)
         {
@@ -105,5 +107,10 @@ class UserManagementController extends Controller
                 "message" => "User Not Found"
             ],404);
         }
+    }
+
+    public function assignTaskToUser(Request $request, User $user)
+    {
+        return $user->tasks()->attach($request->tasks);
     }
 }

@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\UserManagement\app\Http\Controllers\UserManagementController;
+use Modules\TaskManagement\app\Http\Controllers\TaskController;
+use Modules\UserManagement\app\Http\Controllers\CommentController;
 /*
     |--------------------------------------------------------------------------
     | API Routes
@@ -20,23 +22,22 @@ use Modules\UserManagement\app\Http\Controllers\UserManagementController;
 
 
 Route::group(['middleware' => 'auth:api'], function() {
-
-
-
-
-
-
-
-
-    
 });
 
 
 Route::prefix('users')->group(function () {
-    Route::get('/view-all', [UserManagementController::class, 'index']);
-    Route::get('/view-user/{user:username}', [UserManagementController::class, 'show']);
-    Route::post('/save-user', [UserManagementController::class, 'store']);
-    Route::put('update-user/{user:username}', [UserManagementController::class, 'update']);
+    Route::get('/view-all', [UserManagementController::class, 'getUsers']);
+    Route::get('/view-user/{user:username}', [UserManagementController::class, 'viewUser']);
+    Route::post('/save-user', [UserManagementController::class, 'saveUser']);
+    Route::put('update-user/{user:username}', [UserManagementController::class, 'updateUser']);
     Route::delete('/delete-user/{user:username}', [UserManagementController::class, 'destroy']);
-    Route::post('/assign-task', [UserManagementController::class, 'assignTask']);
+    Route::get('/{user:username}/comments/view-all', [CommentController::class, 'getUserComments']);
+    Route::post('/assign-tasks', [UserManagementController::class, 'assignTaskToUser']);
+});
+
+    
+
+Route::prefix('comments')->group(function () {
+    Route::get('/view-all', [CommentController::class, 'getComments']);
+    Route::post('/add-comment', [CommentController::class, 'addComment']);
 });

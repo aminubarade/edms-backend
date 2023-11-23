@@ -15,17 +15,22 @@ return new class extends Migration
             $table->id();
             $table->string('username')->unique();
             $table->string('firstname');
+            $table->string('middlename')->nullable();
             $table->string('lastname');
             $table->string('phone', 10)->unique();
             $table->string('email')->unique();
+            $table->string('rank');
+            $table->date('dob');
+            $table->string('service_number')->unique();
+            $table->string('appt');
+            $table->string('service');
+            $table->string('unit');
+            $table->string('command');
+            $table->string('department');
             $table->string('password');
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('users');
