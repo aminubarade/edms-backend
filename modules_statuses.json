@@ -1,5 +1,7 @@
 {
     "TaskManagement": true,
     "DocumentManagement": true,
-    "UserManagement": true
+    "UserManagement": true,
+    "Directory": true,
+    "Location": true
 }

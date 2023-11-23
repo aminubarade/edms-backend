@@ -14,6 +14,7 @@ class DocumentManagementController extends Controller
      */
     public function index()
     {
+        //file reference
         return view('documentmanagement::index');
     }
 

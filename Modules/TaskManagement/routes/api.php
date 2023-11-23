@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Modules\TaskManagement\app\Http\Controllers\TaskController;
+use Modules\UserManagement\app\Http\Controllers\CommentController;
 
 /*
     |--------------------------------------------------------------------------
@@ -28,5 +29,5 @@ Route::prefix('tasks')->group(function () {
     Route::put('/update-task/{task:slug}', [TaskController::class, 'updateTask']);
     Route::delete('/delete-task/{task:slug}', [TaskController::class, 'deleteTask']);
     Route::post('/assign', [TaskController::class, 'store']);
-
+    Route::get('/{task:slug}/comments/view-all', [CommentController::class, 'getTaskComments']);
 });

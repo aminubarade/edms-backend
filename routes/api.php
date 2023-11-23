@@ -17,7 +17,7 @@ use App\Http\Controllers\Auth\RegisterController;
 |
 */
 
-Route::prefix('auth')->group(['middleware' => ['api']], function () {
+Route::group([['prefix'=>'auth'],'middleware' => ['api']], function () {
     // your routes here
     Route::post('register', [RegisterController::class, 'register']);
     Route::post('login', [LoginController::class, 'login']);

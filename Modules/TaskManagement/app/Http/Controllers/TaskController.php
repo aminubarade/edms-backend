@@ -17,9 +17,18 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function getTasks()
+    private function getTasks()
     {
         $tasks = Task::all();//where task$task id = created by or task$task ID in members
+        return response()->json([
+            'message' => 'All task fetched',
+            'tasks' => $tasks
+        ]);
+    } 
+
+    public function getUserTasks(User $user)
+    {
+        $tasks = $user->tasks;//where task$task id = created by or task$task ID in members
         return response()->json([
             'message' => 'All task fetched',
             'tasks' => $tasks
@@ -56,6 +65,7 @@ class TaskController extends Controller
             $task->description = $request->description;
             $task->created_by = $request->created_by;
             $task->type = $request->type;
+            $task->user_id = $request->user_id;
             $task->status = $request->status;
             $task->save();
             // if($request->users == null){
@@ -69,14 +79,17 @@ class TaskController extends Controller
         }
     }
 
-    public function assignMembers($user, Task $task){
+    public function assignMembers($user, Task $task)
+    {
         return $task->users()->attach($user);
     }
     
-    public function updateTaskMembers(){
+    public function updateTaskMembers()
+    {
 
     }
-    protected function removeTaskMember(){
+    protected function removeTaskMember()
+    {
 
     }
 
@@ -92,7 +105,6 @@ class TaskController extends Controller
             $task->slug= is_null($request->task_title) ? $task->slug: Str::slug($task->task_title); 
             $task->description = is_null($request->description) ? $task->description: $request->description; 
             $task->created_by = is_null($request->created_by) ? $task->created_by : $request->created_by; 
-            $task->members = is_null($request->members) ? $task->members : $request->members; 
             $task->type = is_null($request->type) ? $task->type : $request->type; 
             $task->status = is_null($request->status) ? $task->status : $request->status; 
             $task->update();
@@ -102,9 +114,6 @@ class TaskController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function deleteTask(Task $task)
     {
         //
@@ -121,4 +130,5 @@ class TaskController extends Controller
             ],404);
         }
     }
+
 }

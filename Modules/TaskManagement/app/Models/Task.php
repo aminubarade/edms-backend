@@ -4,6 +4,7 @@ namespace Modules\TaskManagement\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\UserManagement\app\Models\User;
+use Modules\UserManagement\app\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\TaskManagement\Database\factories\TaskFactory;
 
@@ -18,6 +19,11 @@ class Task extends Model
 
     public function users(){
         return $this->belongsToMany(User::class);
+    }
+
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
     }
     
     protected static function newFactory()
