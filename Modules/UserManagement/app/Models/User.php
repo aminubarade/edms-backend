@@ -4,6 +4,9 @@ namespace Modules\UserManagement\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\TaskManagement\app\Models\Task;
+use Modules\DocumentManagement\app\Models\Document;
+use Modules\DocmumentManagement\app\Models\Folder;
+use Modules\UserkManagement\app\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\UserManagement\Database\factories\UserFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
@@ -44,6 +47,11 @@ class User extends Authenticatable
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    public function folders()
+    {
+        return $this->hasMany(Folder::class);
     }
 
     public function scopeFilter()

@@ -11,19 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('documents', function (Blueprint $table) {
+        Schema::create('folders', function (Blueprint $table) {
             $table->id();
-            $table->string('document_title')->unique();
+            $table->string('folder_title')->unique();
             $table->string('slug')->unique();
-            $table->string('type');
-            $table->string('classification');
-            $table->string('body');
-            $table->integer('status');
+            $table->string('class');
+            $table->foreignId('department_id');
             $table->foreignId('user_id');// created by
-            $table->string('doc_ref');
-            $table->integer('approved_by')->nullable();
-            $table->foreignId('task_id')->nullable();
-            $table->foreignId('folder_id')->nullable();
+            $table->string('folder_reference');
             $table->timestamps();
         });
     }
@@ -33,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('documents');
+        Schema::dropIfExists('folders');
     }
 };

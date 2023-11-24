@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Modules\documentManagement\app\Models\Task;
+use Modules\taskManagement\app\Models\Task;
 use Modules\UserManagement\app\Models\User;
 use Modules\DocumentManagement\app\Models\Document;
 use Illuminate\Support\Facades\Validator;
