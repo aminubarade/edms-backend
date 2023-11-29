@@ -1,20 +1,20 @@
 <?php
 
-namespace Modules\Location\app\Http\Controllers;
+namespace Modules\Facilities\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class LocationController extends Controller
+class FacilityController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('location::index');
+        return view('facilities::index');
     }
 
     /**
@@ -22,7 +22,7 @@ class LocationController extends Controller
      */
     public function create()
     {
-        return view('location::create');
+        return view('facilities::create');
     }
 
     /**
@@ -38,7 +38,7 @@ class LocationController extends Controller
      */
     public function show($id)
     {
-        return view('location::show');
+        return view('facilities::show');
     }
 
     /**
@@ -46,7 +46,7 @@ class LocationController extends Controller
      */
     public function edit($id)
     {
-        return view('location::edit');
+        return view('facilities::edit');
     }
 
     /**

@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use Modules\Location\app\Http\Controllers\LocationController;
+use Modules\Facilities\app\Http\Controllers\FacilitiesController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,5 +15,5 @@ use Modules\Location\app\Http\Controllers\LocationController;
 */
 
 Route::group([], function () {
-    Route::resource('location', LocationController::class)->names('location');
+    Route::resource('facilities', FacilitiesController::class)->names('facilities');
 });

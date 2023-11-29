@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            
+            $table->string('branch_name');
+            $table->string('slug');
             $table->timestamps();
         });
     }

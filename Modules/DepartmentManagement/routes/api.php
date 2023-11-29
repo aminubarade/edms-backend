@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Modules\DepartmentManagement\app\Http\Controllers\DepartmentController;
 
 /*
     |--------------------------------------------------------------------------
@@ -16,4 +17,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware(['auth:sanctum'])->prefix('v1')->name('api.')->group(function () {
     Route::get('departmentmanagement', fn (Request $request) => $request->user())->name('departmentmanagement');
+});
+
+Route::prefix('departments')->group(function () {
+    Route::post('/create', [DepartmentController::class,'createDepartment']);
+    Route::get('/{department:slug}/users', [DepartmentController::class,'getDepartmentUsers']);
 });

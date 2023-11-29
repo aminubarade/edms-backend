@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('ranks', function (Blueprint $table) {
+        Schema::create('facilities', function (Blueprint $table) {
             $table->id();
-            $table->string('rank_name');
-            $table->string('slug');
+            $table->foreignId('parent_id')->nullable();
+            $table->string('facility_name');
+            $table->string('type');
+            $table->foreignId('admin')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('ranks');
+        Schema::dropIfExists('facilities');
     }
 };

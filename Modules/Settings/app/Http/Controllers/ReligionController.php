@@ -6,62 +6,81 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\Settings\app\Models\Religion;
+use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
+
 
 class ReligionController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function getAllReligions()
     {
-        return view('settings::index');
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('settings::create');
+       $religions = religion::all();
+       return response()->json([
+        'message' => 'All religions fetched',
+        'religions' => $religions
+       ]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request): RedirectResponse
+    public function createReligion(Request $request)
     {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('settings::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('settings::edit');
+        $validated = Validator::make($request->all(),[
+            'religion_name' => 'required'
+        ]);
+        if($validated->fails())
+        {
+            return response()->json([
+                'message' => $validated->messages()
+            ], 401);
+        }
+        else{
+            $religion = new Religion;
+            $religion->religion_name = $request->religion_name;
+            $religion->slug = Str::slug($religion->religion_name);
+            $religion->save();
+            return response()->json([
+                'message' => 'religion created successfully',
+                'religion' => $religion
+            ]);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function updateReligion(Request $request, Religion $religion)
     {
-        //
+        if($religion->slug)
+        {
+            $religion->religion_name= is_null($request->religion_name) ? $religion->religion_name: $request->religion_name; 
+            $religion->slug= is_null($request->religion_name) ? $religion->slug: Str::slug($religion->religion_name); 
+            //$religion->created_by = is_null($request->updated_by) ? $religion->updated_by : $request->updated_by;
+            $religion->update();
+            return response()->json([
+                "message" => "religion record updated"
+            ],201);
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($id)
+    public function deletereligion(Religion $religion)
     {
-        //
+        if($religion->slug)
+        {
+            $religion->delete();
+            return response()->json([
+                "message" => "religion Deleted"
+            ], 200);
+        }else 
+        {
+            return response()->json([
+                "message" => "religion Not Found"
+            ],404);
+        }
     }
 }

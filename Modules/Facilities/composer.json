@@ -1,5 +1,5 @@
 {
-    "name": "nwidart/location",
+    "name": "nwidart/facilities",
     "description": "",
     "authors": [
         {
@@ -17,15 +17,15 @@
     },
     "autoload": {
         "psr-4": {
-            "Modules\\Location\\": "",
-            "Modules\\Location\\App\\": "app/",
-            "Modules\\Location\\Database\\Factories\\": "database/factories/",
-            "Modules\\Location\\Database\\Seeders\\": "database/seeders/"
+            "Modules\\Facilities\\": "",
+            "Modules\\Facilities\\App\\": "app/",
+            "Modules\\Facilities\\Database\\Factories\\": "database/factories/",
+            "Modules\\Facilities\\Database\\Seeders\\": "database/seeders/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Modules\\Location\\Tests\\": "tests/"
+            "Modules\\Facilities\\Tests\\": "tests/"
         }
     }
 }

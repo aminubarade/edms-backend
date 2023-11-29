@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('common_comments', function (Blueprint $table) {
             $table->id();
+            $table->string('commonComment_name');
+            $table->string('slug');
             
             $table->timestamps();
         });

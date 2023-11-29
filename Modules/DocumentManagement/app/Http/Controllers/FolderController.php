@@ -7,7 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\DocumentManagement\app\Models\Folder;
-use Modules\DepartmentManagement\app\ModelsDepartment;
+use Modules\DepartmentManagement\app\Models\Department;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 

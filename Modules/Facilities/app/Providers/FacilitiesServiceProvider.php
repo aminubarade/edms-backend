@@ -1,15 +1,15 @@
 <?php
 
-namespace Modules\Location\app\Providers;
+namespace Modules\Facilities\app\Providers;
 
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
-class LocationServiceProvider extends ServiceProvider
+class FacilitiesServiceProvider extends ServiceProvider
 {
-    protected string $moduleName = 'Location';
+    protected string $moduleName = 'Facilities';
 
-    protected string $moduleNameLower = 'location';
+    protected string $moduleNameLower = 'facilities';
 
     /**
      * Boot the application events.

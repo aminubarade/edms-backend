@@ -79,6 +79,7 @@ class DocumentController extends Controller
             $document->classification = is_null($request->classification) ? $document->classification : $request->classification; 
             $document->body = is_null($request->body) ? $document->body: $request->body; 
             $document->status = is_null($request->status) ? $document->status : $request->status;
+            //approval status
             $document->user_id = is_null($request->created_by) ? $document->user_id : $request->created_by; 
             $document->approved_by = is_null($request->approved_by) ? $document->approved_by : $request->approved_by;
             $document->update();
