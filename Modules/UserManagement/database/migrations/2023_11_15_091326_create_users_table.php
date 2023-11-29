@@ -24,9 +24,9 @@ return new class extends Migration
             $table->string('service_number')->unique();
             $table->string('appt');
             $table->string('service');
-            $table->string('unit');
-            $table->string('command');
-            $table->string('department');
+            // $table->string('unit');//unit location
+            $table->foreignId('facilty_id')->nullable();//parent location
+            $table->foreignId('department_id')->nullable();//foreign
             $table->string('password');
             $table->timestamps();
         });

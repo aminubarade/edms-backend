@@ -2,6 +2,7 @@
     "TaskManagement": true,
     "DocumentManagement": true,
     "UserManagement": true,
-    "Directory": true,
-    "Location": true
+    "DepartmentManagement": true,
+    "Settings": true,
+    "Facilities": true
 }

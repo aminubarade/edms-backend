@@ -16,10 +16,11 @@ return new class extends Migration
             $table->string('task_title')->unique();
             $table->string('slug')->unique();
             $table->string('description');
-            $table->integer('created_by');
-            $table->foreignId('user_id');//to be saved as array in future
+            $table->integer('created_by');//userId
+            $table->foreignId('user_id');
             $table->string('type');// task and document type table
-            $table->integer('status');//only 1 to 4
+            $table->integer('status');
+            $table->foreignId('department_id')->nullable();//foreign
             $table->timestamps();
         });
     }

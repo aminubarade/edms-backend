@@ -5,6 +5,7 @@ namespace Modules\DocumentManagement\app\Models;
 use Illuminate\Database\Eloquent\Model;
 use Modules\UserManagement\app\Models\User;
 use Modules\UserManagement\app\Models\Comment;
+use Modules\DocumentManagement\app\Models\Folder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Modules\DocumentManagement\Database\factories\DocumentFactory;
 
@@ -25,4 +26,15 @@ class Document extends Model
     {
         return $this->hasMany(Comment::class);
     }
+
+    public function folder()
+    {
+        return $this->belongsTo(Folder::class);
+    }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
+    
 }

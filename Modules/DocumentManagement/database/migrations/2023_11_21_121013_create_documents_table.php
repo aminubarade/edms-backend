@@ -19,10 +19,11 @@ return new class extends Migration
             $table->string('classification');
             $table->string('body');
             $table->integer('status');
-            //refrence
             $table->foreignId('user_id');// created by
+            $table->string('doc_ref');
             $table->integer('approved_by')->nullable();
             $table->foreignId('task_id')->nullable();
+            $table->foreignId('folder_id')->nullable();
             $table->timestamps();
         });
     }
