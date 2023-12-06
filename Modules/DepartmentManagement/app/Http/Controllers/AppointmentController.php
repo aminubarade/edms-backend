@@ -1,20 +1,20 @@
 <?php
 
-namespace Modules\TaskManagement\app\Http\Controllers;
+namespace Modules\DepartmentManagement\app\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 
-class TaskManagementController extends Controller
+class AppointmentController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        return view('taskmanagement::index');
+        return view('departmentmanagement::index');
     }
 
     /**
@@ -22,7 +22,7 @@ class TaskManagementController extends Controller
      */
     public function create()
     {
-        return view('taskmanagement::create');
+        return view('departmentmanagement::create');
     }
 
     /**
@@ -38,7 +38,7 @@ class TaskManagementController extends Controller
      */
     public function show($id)
     {
-        return view('taskmanagement::show');
+        return view('departmentmanagement::show');
     }
 
     /**
@@ -46,7 +46,7 @@ class TaskManagementController extends Controller
      */
     public function edit($id)
     {
-        return view('taskmanagement::edit');
+        return view('departmentmanagement::edit');
     }
 
     /**

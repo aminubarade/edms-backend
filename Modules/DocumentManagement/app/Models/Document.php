@@ -16,7 +16,7 @@ class Document extends Model
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = [];
+    protected $fillable = ['user_id'];
     
     protected static function newFactory(): DocumentFactory
     {
@@ -32,9 +32,9 @@ class Document extends Model
         return $this->belongsTo(Folder::class);
     }
 
-    public function user()
+    public function users()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class);
     }
     
 }
