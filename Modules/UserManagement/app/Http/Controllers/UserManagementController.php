@@ -14,7 +14,7 @@ use Hash;
 
 class UserManagementController extends Controller
 {
-    public function getUsers()
+    public function getAllUsers()
     {
         //import users
         $users = User::all();
@@ -49,21 +49,22 @@ class UserManagementController extends Controller
         }else
         {
             $user = new User;
+            //personal
             $user->username = $request->username;
             $user->firstname = $request->firstname;
             $user->middlename = $request->middlename; //nullable;
             $user->lastname = $request->lastname;
             $user->phone = $request->phone;
             $user->email = $request->email;
+            $user->password = bcrypt($request->password);
             $user->dob =   date($request->dob,strtotime($request->dob));
+            //official info
             $user->rank = $request->rank;
             $user->service_number = $request->service_number;
-            $user->appt = $request->appt;
+            $user->appt = $request->appt;//appt table
             $user->service = $request->service;
-            $user->unit = $request->unit;
-            $user->command = $request->command;
-            $user->department = $request->department;
-            $user->password = bcrypt($request->password);
+            $user->department_id = $request->department_id;
+            $user->is_active = $request->is_active;
             $user->save();
             return response()->json([
                 "message" => "User saved"
@@ -87,6 +88,7 @@ class UserManagementController extends Controller
             $user->phone = is_null($request->phone) ? $user->phone : $request->phone; 
             $user->email = is_null($request->email) ? $user->email : $request->email; 
             $user->password = is_null($request->password) ? $user->password : $request->password; 
+            $user->department_id = is_null($request->department_id) ? $user->department_id : $request->department_id; 
             $user->update();
             return response()->json([
                 "message" => "User record updated"
@@ -94,7 +96,7 @@ class UserManagementController extends Controller
         }
     }
 
-    public function deleteUser($id)
+    public function deleteUser(User $user)
     {
         if($user->username)
         {

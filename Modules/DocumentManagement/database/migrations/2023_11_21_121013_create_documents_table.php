@@ -17,13 +17,14 @@ return new class extends Migration
             $table->string('slug')->unique();
             $table->string('type');
             $table->string('classification');
+            $table->string('document_ref')->unique();
             $table->string('body');
             $table->integer('status');
-            $table->foreignId('user_id');// created by
-            $table->string('doc_ref');
+            $table->foreignId('created_by');
             $table->integer('approved_by')->nullable();
             $table->foreignId('task_id')->nullable();
             $table->foreignId('folder_id')->nullable();
+            $table->foreignId('department_id')->nullable();
             $table->timestamps();
         });
     }

@@ -44,14 +44,20 @@ class DocumentController extends Controller
             $document->slug = Str::slug($document->document_title);
             $document->type = $request->type;
             $document->classification = $request->classification;
+            $document->document_ref = $request->document_ref;
             $document->body = $request->body;
-            $document->status = $request->status; 
-            $document->user_id = $request->created_by;
+            $document->status = $request->status;
+            $document->created_by = $request->created_by;
             $document->approved_by = $request->approved_by;
-            //document
+            $document->task_id = $request->task_id;
+            $document->folder_id = $request->folder_id;
+            $document->department_id = $request->department_id;
             $document->save();
+            if($request->users){
+                $document->users()->attach($request->users); 
+            }
             return response()->json([
-                "message" => "document created successfully.",
+                "message" => "Document created successfully.",
                 'Created document' => $document
             ],201);
         }
@@ -59,13 +65,33 @@ class DocumentController extends Controller
 
     public function viewDocument(Document $document)
     {
-        return $document;
+        return response()->json([
+            'message' => 'viewing document',
+            'document' => $document,
+            'members' => $document->users()->get()
+        ]);
     }
-
 
     protected function approveDocument(Request $request, Document $document)
     {
-        
+        if($document->slug)
+        {
+            $document->approved_by = is_null($request->approved_by) ? $document->approved_by : $request->approved_by;
+            $document->status = is_null($request->status) ? $document->status : $request->status;
+            $document->update();
+            return response()->json([
+                "message" => "document status update"
+            ],201);
+        }
+    }
+
+    public function shareDocument(Request $request, Document $documents)
+    {
+         $document->users()->attach($request->users);
+         return response()->json([
+            "message" => "Shared with",
+            'members' => $document->users()
+         ]);
     }
 
 
@@ -78,9 +104,8 @@ class DocumentController extends Controller
             $document->type = is_null($request->type) ? $document->type : $request->type; 
             $document->classification = is_null($request->classification) ? $document->classification : $request->classification; 
             $document->body = is_null($request->body) ? $document->body: $request->body; 
-            $document->status = is_null($request->status) ? $document->status : $request->status;
             //approval status
-            $document->user_id = is_null($request->created_by) ? $document->user_id : $request->created_by; 
+            $document->created_id = is_null($request->created_by) ? $document->created_by : $request->created_by; 
             $document->approved_by = is_null($request->approved_by) ? $document->approved_by : $request->approved_by;
             $document->update();
             return response()->json([

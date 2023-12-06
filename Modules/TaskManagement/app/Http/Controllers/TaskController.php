@@ -17,7 +17,7 @@ class TaskController extends Controller
     /**
      * Display a listing of the resource.
      */
-    private function getTasks()
+    public function getTasks()
     {
         $tasks = Task::all();//where task$task id = created by or task$task ID in members
         return response()->json([
@@ -28,7 +28,7 @@ class TaskController extends Controller
 
     public function getUserTasks(User $user)
     {
-        $tasks = $user->tasks;//where task$task id = created by or task$task ID in members
+        $tasks = $user->tasks;
         return response()->json([
             'message' => 'All task fetched',
             'tasks' => $tasks

@@ -19,7 +19,7 @@ class User extends Authenticatable
     /**
      * The attributes that are mass assignable.
      */
-    protected $fillable = ['task_id'];
+    protected $fillable = ['task_id', 'document_id'];
     protected $hidden = [
         'password',
         'remember_token',
@@ -36,6 +36,11 @@ class User extends Authenticatable
     public function tasks()
     {
         return $this->belongsToMany(Task::class);
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany(Document::class);
     }
     
     protected static function newFactory(): UserFactory

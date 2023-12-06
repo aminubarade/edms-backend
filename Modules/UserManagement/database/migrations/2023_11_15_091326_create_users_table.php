@@ -24,10 +24,11 @@ return new class extends Migration
             $table->string('service_number')->unique();
             $table->string('appt');
             $table->string('service');
-            // $table->string('unit');//unit location
-            $table->foreignId('facilty_id')->nullable();//parent location
+            //$table->string('unit');//sub location
+            $table->foreignId('facility_id')->nullable();//parent location
             $table->foreignId('department_id')->nullable();//foreign
             $table->string('password');
+            $table->tinyInteger('is_active');
             $table->timestamps();
         });
     }
