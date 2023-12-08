@@ -9,60 +9,17 @@ use Illuminate\Http\Response;
 
 class DocumentManagementController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
+    public function uploadFile(Request $request)
     {
-        //file reference
-        return view('documentmanagement::index');
-    }
+        $file = $request->file('file');
+        $fileName = 'File'.time().'.'.$file->extension();
+        $filePath = public_path(). '/files';
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        return view('documentmanagement::create');
-    }
+        $file->move($filePath, $fileName);
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Show the specified resource.
-     */
-    public function show($id)
-    {
-        return view('documentmanagement::show');
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit($id)
-    {
-        return view('documentmanagement::edit');
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, $id): RedirectResponse
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy($id)
-    {
-        //
+        return response()->json([
+            "success" => true,
+            "message" => "Image has been uploaded successfully."
+        ]);
     }
 }

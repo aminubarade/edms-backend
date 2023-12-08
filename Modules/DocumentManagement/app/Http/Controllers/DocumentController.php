@@ -44,13 +44,13 @@ class DocumentController extends Controller
             $document->slug = Str::slug($document->document_title);
             $document->type = $request->type;
             $document->classification = $request->classification;
-            $document->document_ref = $request->document_ref;
+            $document->document_ref = $request->document_ref;//autogen NHQ
             $document->body = $request->body;
             $document->status = $request->status;
-            $document->created_by = $request->created_by;
+            $document->created_by = $request->created_by; //auth()->user()->id;
             $document->approved_by = $request->approved_by;
-            $document->task_id = $request->task_id;
-            $document->folder_id = $request->folder_id;
+            $document->task_id = $request->task_id; //this task
+            $document->folder_id = $request->folder_id; //this folder
             $document->department_id = $request->department_id;
             $document->save();
             if($request->users){
@@ -72,11 +72,11 @@ class DocumentController extends Controller
         ]);
     }
 
-    protected function approveDocument(Request $request, Document $document)
+    protected function completeDocument(Request $request, Document $document)
     {
         if($document->slug)
         {
-            $document->approved_by = is_null($request->approved_by) ? $document->approved_by : $request->approved_by;
+            $document->completed_by = is_null(auth()->user()->id) ? $document->complted_by : auth()->user()->id ;
             $document->status = is_null($request->status) ? $document->status : $request->status;
             $document->update();
             return response()->json([
@@ -90,10 +90,9 @@ class DocumentController extends Controller
          $document->users()->attach($request->users);
          return response()->json([
             "message" => "Shared with",
-            'members' => $document->users()
+            'members' => $document->users()->get()
          ]);
     }
-
 
     public function updateDocument(Request $request, Document $document)
     {
@@ -104,9 +103,7 @@ class DocumentController extends Controller
             $document->type = is_null($request->type) ? $document->type : $request->type; 
             $document->classification = is_null($request->classification) ? $document->classification : $request->classification; 
             $document->body = is_null($request->body) ? $document->body: $request->body; 
-            //approval status
-            $document->created_id = is_null($request->created_by) ? $document->created_by : $request->created_by; 
-            $document->approved_by = is_null($request->approved_by) ? $document->approved_by : $request->approved_by;
+            //approval status 
             $document->update();
             return response()->json([
                 "message" => "document record updated"
