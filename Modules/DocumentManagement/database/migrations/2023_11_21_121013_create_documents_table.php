@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('body');
             $table->integer('status');
             $table->foreignId('created_by');
-            $table->integer('approved_by')->nullable();
+            $table->integer('completed_by')->nullable();
             $table->foreignId('task_id')->nullable();
             $table->foreignId('folder_id')->nullable();
             $table->foreignId('department_id')->nullable();
