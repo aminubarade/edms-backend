@@ -4,6 +4,8 @@ namespace Modules\DocumentManagement\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Modules\UserManagement\app\Models\User;
+use Modules\DocumentManagement\app\Models\Document;
 use Modules\DocumentManagement\Database\factories\DocumentRequestFactory;
 
 class DocumentRequest extends Model
@@ -20,7 +22,7 @@ class DocumentRequest extends Model
         //return DocumentRequestFactory::new();
     }
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(User::class);
     }
 
     public function roles(): BelongsToMany

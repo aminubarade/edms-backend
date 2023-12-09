@@ -5,6 +5,7 @@ namespace Modules\UserManagement\app\Models;
 use Illuminate\Database\Eloquent\Model;
 use Modules\TaskManagement\app\Models\Task;
 use Modules\DocumentManagement\app\Models\Document;
+use Modules\DocumentManagement\app\Models\DocumentRequest;
 use Modules\DocmumentManagement\app\Models\Folder;
 use Modules\UserkManagement\app\Models\Comment;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -58,6 +59,11 @@ class User extends Authenticatable
     {
         return $this->hasMany(Folder::class);
     }
+
+    public function documentrequests(){
+        return $this->belongsToMany(DocumentRequest::class);
+    }
+
 
     public function scopeFilter()
     {
