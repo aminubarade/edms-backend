@@ -6,17 +6,26 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
+use Modules\DocumentManagement\app\Models\DocumentRequest;
 
 class DocumentRequestController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function getRequest(){
+        $documentRequests = DocumenntRequest::all();
+
+        return response()->json([
+            "message" => "all request fetched",
+            "requests" =>  $documentRequests //$user->documentRequests
+        ]);
+    }
     public function sendRequest(Request $request)
     {
         $documentRequest = new DocumentRequest;
-        $documentRequest->document_id = $request->document_id;
-        $documentRequest->title = $document->title;
+        $documentRequest->document_id = "request->document_id";
+        //$documentRequest->title = $document->title;
         $documentRequest->request_from = $request->request_from;//user_id
         $documentRequest->request_to = $request->request_to;//user_id
         $documentRequest->request_status = $request->request_status;
@@ -25,7 +34,7 @@ class DocumentRequestController extends Controller
         $documentRequest->document_ref = $request->document_ref;//doc()->id;
     }
 
-    public function approveRequest(Request $request, $id)
+    public function treatRequest(Request $request, $id)
     {
         $documentRequest = DocumentRequest::find($id);
         if($documentRequest->id)

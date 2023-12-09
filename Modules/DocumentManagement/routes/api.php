@@ -24,7 +24,9 @@ Route::prefix('documents')->group(function () {
     Route::get('/{document:slug}/comments/view-all', [CommentController::class, 'getDocumentComments']);
 
     Route::prefix('requests')->group(function () {
+        Route::post('/', [DocumentRequestController::class, 'getRequest']);
         Route::post('/send', [DocumentRequestController::class, 'sendRequest']);
+        Route::put('/udpate/{id}', [DocumentRequestController::class, 'treatRequest']);
     });
 });
 
