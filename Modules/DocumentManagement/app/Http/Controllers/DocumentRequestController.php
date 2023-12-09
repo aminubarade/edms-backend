@@ -14,13 +14,19 @@ class DocumentRequestController extends Controller
      * Display a listing of the resource.
      */
     public function getRequest(){
+
         $documentRequests = DocumenntRequest::all();
+        $currentUser = auth()->user()->id;
+        if($user->id === $currentUser){
+            $documentRequests = $user->documentRequest;
+        }
 
         return response()->json([
             "message" => "all request fetched",
             "requests" =>  $documentRequests //$user->documentRequests
         ]);
     }
+
     public function sendRequest(Request $request)
     {
         $documentRequest = new DocumentRequest;
