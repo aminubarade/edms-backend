@@ -19,4 +19,12 @@ class DocumentRequest extends Model
     {
         //return DocumentRequestFactory::new();
     }
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function roles(): BelongsToMany
+    {
+        return $this->belongsToMany(Role::class, 'role_user_table', 'user_id', 'role_id');
+    }
 }
