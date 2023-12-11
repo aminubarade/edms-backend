@@ -19,9 +19,11 @@ return new class extends Migration
             $table->string('classification');
             $table->string('document_ref')->unique();
             $table->string('body');
-            $table->integer('status');
+            $table->string('status')->default("Draft");
             $table->foreignId('created_by');
-            $table->integer('completed_by')->nullable();
+            $table->boolean('is_active')->default(1);
+            $table->foreignId('updated_by')->nullable();
+            $table->foreignId('completed_by')->nullable();
             $table->foreignId('task_id')->nullable();
             $table->foreignId('folder_id')->nullable();
             $table->foreignId('department_id')->nullable();
