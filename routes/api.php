@@ -16,11 +16,12 @@ use App\Http\Controllers\Auth\RegisterController;
 | be assigned to the "api" middleware group. Make something great!
 |
 */
+Route::post('auth/register', [RegisterController::class, 'register']);
+Route::post('auth/login', [LoginController::class, 'login']);
 
 Route::group([['prefix'=>'auth'],'middleware' => ['api']], function () {
     // your routes here
-    Route::post('register', [RegisterController::class, 'register']);
-    Route::post('login', [LoginController::class, 'login']);
+    
 
     Route::group(['middleware' => 'auth:api'], function() {
         Route::post('logout', [LoginController::class, 'logout']);

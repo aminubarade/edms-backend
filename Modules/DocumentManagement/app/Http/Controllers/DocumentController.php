@@ -11,10 +11,13 @@ use Modules\UserManagement\app\Models\User;
 use Modules\DocumentManagement\app\Models\Document;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
+use Auth;
 use DB;
 
 class DocumentController extends Controller
 {
+    const DOCUMENT_REFERENCE_CODE_PREFIX = 'NHQ/VOL-';
+    
     public function getDocuments()
     {
         $documents = Document::all();//where document$document id = created by or document$document ID in classification
@@ -44,21 +47,21 @@ class DocumentController extends Controller
             $document->slug = Str::slug($document->document_title);
             $document->type = $request->type;
             $document->classification = $request->classification;
-            $document->document_ref = $request->document_ref;//autogen NHQ
             $document->body = $request->body;
-            $document->status = $request->status;
-            $document->created_by = $request->created_by; //auth()->user()->id;
-            $document->approved_by = $request->approved_by;
-            $document->task_id = $request->task_id; //this task
-            $document->folder_id = $request->folder_id; //this folder
+            $document->created_by = Auth::user()->id;
+            $document->task_id = $request->task_id;
+            $document->folder_id = $request->folder_id; 
             $document->department_id = $request->department_id;
             $document->save();
+            if(!$document->document_ref){
+                $this->generateUserRefCode($document);
+            }
             if($request->users){
                 $document->users()->attach($request->users); 
             }
             return response()->json([
                 "message" => "Document created successfully.",
-                'Created document' => $document
+                'Created document' => $document 
             ],201);
         }
     }
@@ -72,12 +75,13 @@ class DocumentController extends Controller
         ]);
     }
 
-    protected function completeDocument(Request $request, Document $document)
+    public function completeDocument(Request $request, Document $document)
     {
         if($document->slug)
         {
-            $document->completed_by = is_null(auth()->user()->id) ? $document->complted_by : auth()->user()->id ;
-            $document->status = is_null($request->status) ? $document->status : $request->status;
+            $document->completed_by = is_null(auth()->user()->id) ? $document->complted_by : auth()->user()->id;
+            $document->is_active = 0;
+            $document->status = 1;
             $document->update();
             return response()->json([
                 "message" => "document status update"
@@ -85,7 +89,7 @@ class DocumentController extends Controller
         }
     }
 
-    public function shareDocument(Request $request, Document $documents)
+    private function shareDocument(Request $request, Document $documents)
     {
          $document->users()->attach($request->users);
          return response()->json([
@@ -96,14 +100,15 @@ class DocumentController extends Controller
 
     public function updateDocument(Request $request, Document $document)
     {
-        if($document->slug)
+        if($document->slug || $document->is_active = 1)
         {
             $document->document_title= is_null($request->document_title) ? $document->document_title: $request->document_title; 
             $document->slug= is_null($request->document_title) ? $document->slug: Str::slug($document->document_title); 
             $document->type = is_null($request->type) ? $document->type : $request->type; 
             $document->classification = is_null($request->classification) ? $document->classification : $request->classification; 
             $document->body = is_null($request->body) ? $document->body: $request->body; 
-            //approval status 
+            $document->updated_by = Auth::user()->id;
+            //remove update member
             $document->update();
             return response()->json([
                 "message" => "document record updated"
@@ -126,5 +131,14 @@ class DocumentController extends Controller
                 "message" => "Document Not Found"
             ],404);
         }
+    }
+
+
+    private function generateUserRefCode(Document $document)
+    {
+        $baseValue = 0;
+        $incrementId = $baseValue + $document->id;
+        $document->document_ref=  self::DOCUMENT_REFERENCE_CODE_PREFIX.$incrementId;
+        $document->save();
     }
 }

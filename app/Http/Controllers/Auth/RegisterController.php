@@ -41,6 +41,14 @@ class RegisterController extends BaseController
             $user->phone = $request->phone;
             $user->email = $request->email;
             $user->password = bcrypt($request->password);
+            $user->dob =   date($request->dob,strtotime($request->dob));
+            //official info
+            $user->rank = $request->rank;
+            $user->service_number = $request->service_number;
+            $user->appt = $request->appt;//appt table
+            $user->service = $request->service;
+            $user->department_id = $request->department_id;
+            $user->is_active = $request->is_active;
             $user->save();
             $accessToken = $user->createToken('authToken')->accessToken;
             return response()->json([

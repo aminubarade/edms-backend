@@ -41,3 +41,11 @@ Route::prefix('comments')->group(function () {
     Route::get('/view-all', [CommentController::class, 'getComments']);
     Route::post('/add-comment', [CommentController::class, 'addComment']);
 });
+
+Route::prefix('notifications')->group(function () {
+    Route::get('/viewAll', [NotificationController::class, 'viewAll']);
+    Route::get('/unread', [NotificationController::class, 'unread']);
+    Route::get('/getUnreadNotificationsCount', [NotificationController::class, 'getUnreadNotificationsCount']);
+    Route::get('/markAsRead/{notificationId}', [NotificationController::class, 'markAsRead']);
+    Route::post('/bulkUpdate', [NotificationController::class, 'bulkUpdate']);
+});
