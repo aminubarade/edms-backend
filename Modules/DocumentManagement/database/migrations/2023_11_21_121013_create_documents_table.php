@@ -24,6 +24,7 @@ return new class extends Migration
             $table->boolean('is_active')->default(1);
             $table->foreignId('updated_by')->nullable();
             $table->foreignId('completed_by')->nullable();
+           // $table->foreignId('deleted_by')->nullable();
             $table->foreignId('task_id')->nullable();
             $table->foreignId('folder_id')->nullable();
             $table->foreignId('department_id')->nullable();
