@@ -14,7 +14,6 @@ class DocumentRequestController extends Controller
      * Display a listing of the resource.
      */
     public function getRequest(){
-
         $documentRequests = DocumenntRequest::all();
         $currentUser = auth()->user()->id;
         if($user->id === $currentUser){

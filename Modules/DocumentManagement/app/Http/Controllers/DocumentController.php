@@ -16,11 +16,13 @@ use DB;
 
 class DocumentController extends Controller
 {
-    const DOCUMENT_REFERENCE_CODE_PREFIX = 'NHQ/VOL-';
-    
+    const DOCUMENT_REFERENCE_CODE_PREFIX = 'NHQ/08/VOL-';
+
     public function getDocuments()
     {
-        $documents = Document::all();//where document$document id = created by or document$document ID in classification
+        $userId = Auth::user()->id;
+        $user = User::find($userId);
+        $documents = $user->documents;
         return response()->json([
             'message' => 'All Documents fetched',
             'documents' => $documents
@@ -42,7 +44,7 @@ class DocumentController extends Controller
         ],422);
         }
         else{
-            $document = new document;
+            $document = new Document;
             $document->document_title = $request->document_title;
             $document->slug = Str::slug($document->document_title);
             $document->type = $request->type;
@@ -73,29 +75,6 @@ class DocumentController extends Controller
             'document' => $document,
             'members' => $document->users()->get()
         ]);
-    }
-
-    public function completeDocument(Request $request, Document $document)
-    {
-        if($document->slug)
-        {
-            $document->completed_by = is_null(auth()->user()->id) ? $document->complted_by : auth()->user()->id;
-            $document->is_active = 0;
-            $document->status = 1;
-            $document->update();
-            return response()->json([
-                "message" => "document status update"
-            ],201);
-        }
-    }
-
-    private function shareDocument(Request $request, Document $documents)
-    {
-         $document->users()->attach($request->users);
-         return response()->json([
-            "message" => "Shared with",
-            'members' => $document->users()->get()
-         ]);
     }
 
     public function updateDocument(Request $request, Document $document)
@@ -133,6 +112,38 @@ class DocumentController extends Controller
         }
     }
 
+    public function completeDocument(Request $request, Document $document)
+    {
+        if($document->slug)
+        {
+            $document->completed_by = auth()->user()->id;
+            $document->is_active = 0;
+            $document->status = 1;
+            $document->update();
+            return response()->json([
+                "message" => "document status update"
+            ],201);
+        }
+    }
+
+    private function shareDocument(Request $request, Document $documents)
+    {
+         $document->users()->attach($request->users);
+         return response()->json([
+            "message" => "Shared with",
+            'members' => $document->users()->get()
+         ]);
+    }
+
+    public function addDocumentToTask()
+    {
+        
+    }
+
+    public function moveDocumentToFolder()
+    {
+
+    }
 
     private function generateUserRefCode(Document $document)
     {
