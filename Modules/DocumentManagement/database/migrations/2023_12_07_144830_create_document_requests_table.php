@@ -17,10 +17,10 @@ return new class extends Migration
             $table->string('title');
             $table->foreignId('request_from');
             $table->foreignId('request_to');
-            $table->integer('request_status');
+            $table->string('request_status')->default('pending');
             $table->foreignId('treated_by')->nullable();
             $table->string('remark')->nullable();
-            $table->string('document_ref');
+            $table->string('document_ref')->nullabe();
             $table->date('approval_date')->nullable();
             $table->timestamps();
         });
