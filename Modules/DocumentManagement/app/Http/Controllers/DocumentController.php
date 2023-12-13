@@ -112,7 +112,7 @@ class DocumentController extends Controller
         }
     }
 
-    public function completeDocument(Request $request, Document $document)
+    public function completeDocument(Document $document)
     {
         if($document->slug)
         {

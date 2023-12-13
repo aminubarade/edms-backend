@@ -21,7 +21,7 @@ class DocumentRequest extends Model
     {
         //return DocumentRequestFactory::new();
     }
-    public function user(){
+    public function users(){
         return $this->belongsToMany(User::class);
     }
 
