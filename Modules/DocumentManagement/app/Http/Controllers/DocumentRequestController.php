@@ -13,11 +13,11 @@ use Auth;
 
 class DocumentRequestController extends Controller
 {
-    public function getDocumentRequests(){
-
+    public function getDocumentRequests()
+    {
         $userId = auth()->user()->id;
         $user = User::find($userId);
-        $documentRequests = $user->documentRequests;
+        $documentRequests = $user->documentRequestsgit;
         return response()->json([
             "message" => "all request fetched",
             "requests" =>  $documentRequests
@@ -28,25 +28,34 @@ class DocumentRequestController extends Controller
     {
         $documentRequest = new DocumentRequest;
         $documentRequest->title = $request->title;
-        //document request
         $documentRequest->request_from = $request->request_from;
-        $documentRequest->request_to = $request->request_to[0];
+        // if($documentRequest->request_from == Auth::user()->id){
+        //     $documentRequest->is_active = 1;
+        // }
+        $documentRequest->request_to = $request->request_to;
         $documentRequest->request_status = $request->request_status;
         $documentRequest->document_id = $request->document_id;
         $documentRequest->treated_by = $request->treated_by;
         $documentRequest->remark = $request->remark;
         $documentRequest->document_ref = $request->document_ref;
         $documentRequest->save();
-        if($request->request_to){
-            $documentRequest->users()->attach($request->request_to);
+    
+        if($request->copies){
+            $members = $request->copies;
+            array_push($members, $request->request_to);
+            
         }
+        else{
+            $members = [$request->request_to];
+        }
+
+        $documentRequest->users()->attach(array_unique($members));
         return response()->json([
             "message" => "Document request sent",
             "documentRequest" => $documentRequest
         ]);
     }
-
-
+ 
     public function processDocumentRequest(Request $request, $id)
     {
         $documentRequest = DocumentRequest::find($id);
@@ -67,7 +76,8 @@ class DocumentRequestController extends Controller
         return $documentRequest;
     }
 
-    public function retractDocumentRequest(){
+    public function retractDocumentRequest()
+    {
 
     }
 
