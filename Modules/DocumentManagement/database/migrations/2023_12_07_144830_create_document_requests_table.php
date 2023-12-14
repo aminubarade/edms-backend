@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('request_to');
             $table->string('request_status')->default('pending');
             $table->foreignId('treated_by')->nullable();
+            $table->boolean('is_active')->default(0);
             $table->string('remark')->nullable();
             $table->string('document_ref')->nullabe();
             $table->date('approval_date')->nullable();
