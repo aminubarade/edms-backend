@@ -24,7 +24,8 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::prefix('requests')->group(function () {
             Route::get('/', [DocumentRequestController::class, 'getDocumentRequests']);
             Route::post('/send', [DocumentRequestController::class, 'sendDocumentRequest']);
-            Route::patch('/udpate/{id}', [DocumentRequestController::class, 'processDocumentRequest']);
+            Route::patch('/process/{id}', [DocumentRequestController::class, 'processDocumentRequest']);
+            Route::patch('/view/{documentrequest:slug}', [DocumentRequestController::class, 'processDocumentRequest']);
         });
     });
 
