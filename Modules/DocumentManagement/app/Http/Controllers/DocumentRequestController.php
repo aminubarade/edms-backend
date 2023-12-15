@@ -39,11 +39,9 @@ class DocumentRequestController extends Controller
         $documentRequest->remark = $request->remark;
         $documentRequest->document_ref = $request->document_ref;
         $documentRequest->save();
-    
         if($request->copies){
             $members = $request->copies;
             array_push($members, $request->request_to);
-            
         }
         else{
             $members = [$request->request_to];
@@ -55,7 +53,6 @@ class DocumentRequestController extends Controller
             "documentRequest" => $documentRequest
         ]);
     }
- 
     public function processDocumentRequest(Request $request, $id)
     {
         $documentRequest = DocumentRequest::find($id);
