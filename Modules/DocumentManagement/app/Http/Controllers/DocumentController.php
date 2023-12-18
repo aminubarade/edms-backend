@@ -144,6 +144,10 @@ class DocumentController extends Controller
     {
 
     }
+    public function searchDocument()
+    {
+
+    }
 
     private function generateUserRefCode(Document $document)
     {
