@@ -82,9 +82,25 @@ class DocumentRequestController extends Controller
         return $documentRequest;
     }
 
-    public function retractDocumentRequest()
+    public function retractDocumentRequest(DocumentReequest $documentRequest)
     {
+        if($documentRequest->slug){
+            if($documentRequest->request_from == Auth::user()->id){
+                $documentRequest->is_active = 0;
+                $documentRequest->update();
+            }
+        }
+        return response()->json([
+            "message" => "Request retracted",
+            "documentRequest" => $documentRequest
 
+        ], 200);
+
+    }
+
+    public function searchDocumentRequest(DocumentReequest $documentRequest)
+    {
+        
     }
 
 
