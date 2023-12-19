@@ -53,10 +53,14 @@ class DocumentRequestController extends Controller
             "documentRequest" => $documentRequest
         ]);
     }
+    public function updateDocumentRequest(){
+        // php
+    }
 
     public function approveSendDocumentRequest(DocumentRequest $documentRequest)
     {
-        if($request->request_from === Auth::user()->id){
+        if($request->request_from === Auth::user()->id)
+        {
             $documentRequest->is_active = $request->is_active;
             $documentRequest->update();
         }
