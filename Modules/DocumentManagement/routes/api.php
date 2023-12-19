@@ -17,15 +17,16 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::put('/update/{document:slug}', [DocumentController::class, 'updateDocument']);
         Route::put('/update-status/{document:slug}', [DocumentController::class, 'completeDocument']);
         Route::delete('/delete/{document:slug}', [DocumentController::class, 'deleteDocument']);
-        Route::post('/assign-to-task', [DocumentController::class, 'assignToTask']);
-        Route::post('/move-to-folder', [DocumentController::class, 'moveTaskTo']);
-        Route::get('/{document:slug}/comments/view-all', [CommentController::class, 'getDocumentComments']);
+        Route::post('/add-to-task/{document:slug}', [DocumentController::class, 'addDocumentToTask']);
+        Route::post('/move-to-folder/{document:slug}', [DocumentController::class, 'moveDocumentToFolder']);
+        Route::get('/{document:slug}/comments/view-all', [DocumentController::class, 'getDocumentComments']);
     
         Route::prefix('requests')->group(function () {
             Route::get('/', [DocumentRequestController::class, 'getDocumentRequests']);
             Route::post('/send', [DocumentRequestController::class, 'sendDocumentRequest']);
             Route::patch('/process/{id}', [DocumentRequestController::class, 'processDocumentRequest']);
             Route::patch('/view/{documentrequest:slug}', [DocumentRequestController::class, 'processDocumentRequest']);
+            Route::patch('approve-send',[DocumentRequestController::class, 'approveSendDocumentRequest']);
         });
     });
 

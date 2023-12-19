@@ -90,7 +90,8 @@ class DocumentController extends Controller
             //remove update member
             $document->update();
             return response()->json([
-                "message" => "document record updated"
+                "message" => "document record updated",
+                "document" => $document
             ],201);
         }
     }
@@ -112,13 +113,13 @@ class DocumentController extends Controller
         }
     }
 
-    public function completeDocument(Document $document)
+    public function completeDocument(Request $request, Document $document)
     {
         if($document->slug)
         {
             $document->completed_by = auth()->user()->id;
             $document->is_active = 0;
-            $document->status = 1;
+            $document->status = $request->status;
             $document->update();
             return response()->json([
                 "message" => "document status update"
@@ -126,7 +127,7 @@ class DocumentController extends Controller
         }
     }
 
-    private function shareDocument(Request $request, Document $documents)
+    public function shareDocument(Request $request, Document $documents)
     {
          $document->users()->attach($request->users);
          return response()->json([
@@ -135,14 +136,28 @@ class DocumentController extends Controller
          ]);
     }
 
-    public function addDocumentToTask()
+    public function addDocumentToTask(Document $document)
     {
-        
+        if($document->slug){
+            $document->task_id = $request->task_id;
+            $document->update();
+        }
+        return response()->json([
+            "message" => "Document added to task successfully",
+            'document' => $document
+        ]);
     }
 
     public function moveDocumentToFolder()
     {
-
+        if($document->slug){
+            $document->folder_id = $request->folder_id;
+            $document->update();
+        }
+        return response()->json([
+            "message" => "Document added to folder successfully",
+            'document' => $document
+        ]);
     }
     public function searchDocument()
     {
