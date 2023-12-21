@@ -9,11 +9,12 @@ use Illuminate\Support\Facades\Storage;
 
 trait FileUploads
 {
-    public function uploadFile(Request $request)
+    public function uploadFile(Request $request,$entity)
     {
         $file = $request->file('file');
         $fileName = 'File'.time().'.'.$file->extension();
         $filePath = public_path(). '/files';
+        $
         $file->move($filePath, $fileName);
         return response()->json([
             "success" => true,

@@ -22,18 +22,19 @@ use Modules\UserManagement\app\Http\Controllers\CommentController;
 
 
 Route::group(['middleware' => 'auth:api'], function() {
+    Route::prefix('users')->group(function () {
+        Route::get('/', [UserManagementController::class, 'getAllUsers']);
+        Route::get('/view/{user:username}', [UserManagementController::class, 'viewUser']);
+        Route::post('/save', [UserManagementController::class, 'saveUser']);
+        Route::put('/update/{user:username}', [UserManagementController::class, 'updateUser']);
+        Route::delete('/delete/{user:username}', [UserManagementController::class, 'destroy']);
+        Route::post('/assign-tasks', [UserManagementController::class, 'assignTaskToUser']);
+        Route::get('/{user:username}/comments/view-all', [CommentController::class, 'getUserComments']);//fetch
+    });
 });
 
 
-Route::prefix('users')->group(function () {
-    Route::get('/', [UserManagementController::class, 'getAllUsers']);
-    Route::get('/view/{user:username}', [UserManagementController::class, 'viewUser']);
-    Route::post('/save', [UserManagementController::class, 'saveUser']);
-    Route::put('/update/{user:username}', [UserManagementController::class, 'updateUser']);
-    Route::delete('/delete/{user:username}', [UserManagementController::class, 'destroy']);
-    Route::post('/assign-tasks', [UserManagementController::class, 'assignTaskToUser']);
-    Route::get('/{user:username}/comments/view-all', [CommentController::class, 'getUserComments']);//fetch
-});
+
 
     
 

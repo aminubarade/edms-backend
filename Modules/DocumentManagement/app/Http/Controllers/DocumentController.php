@@ -20,8 +20,7 @@ class DocumentController extends Controller
 
     public function getDocuments()
     {
-        $userId = Auth::user()->id;
-        $user = User::find($userId);
+        $user = User::find(Auth::user()->id);
         $documents = $user->documents;
         return response()->json([
             'message' => 'All Documents fetched',
@@ -159,6 +158,18 @@ class DocumentController extends Controller
             'document' => $document
         ]);
     }
+
+    public function attachFileToDocument(Request $request,$id)
+    {
+        $entity = Document::find($id);
+        if(!$entity){
+            return response()->json([
+                "message" => "Entity Not Found"
+        ],422);
+        }
+        $this->uploadFile($request,$entity);
+    }
+
     public function searchDocument()
     {
 

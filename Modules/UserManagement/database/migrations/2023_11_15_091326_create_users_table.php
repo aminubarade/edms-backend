@@ -28,7 +28,7 @@ return new class extends Migration
             $table->foreignId('facility_id')->nullable();//parent location
             $table->foreignId('department_id')->nullable();//foreign
             $table->string('password');
-            $table->tinyInteger('is_active');
+            $table->boolean('is_active')->default(0);
             $table->timestamps();
         });
     }
