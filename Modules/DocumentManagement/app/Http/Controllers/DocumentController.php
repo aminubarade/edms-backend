@@ -10,12 +10,14 @@ use Modules\taskManagement\app\Models\Task;
 use Modules\UserManagement\app\Models\User;
 use Modules\DocumentManagement\app\Models\Document;
 use Illuminate\Support\Facades\Validator;
+use App\Http\Traits\FileUploads;
 use Illuminate\Support\Str;
 use Auth;
 use DB;
 
 class DocumentController extends Controller
 {
+    use FileUploads;
     const DOCUMENT_REFERENCE_CODE_PREFIX = 'NHQ/08/VOL-';
 
     public function getDocuments()
@@ -60,6 +62,11 @@ class DocumentController extends Controller
             if($request->users){
                 $document->users()->attach($request->users); 
             }
+            if($request->files){
+                $this->attachFileToDocument($request, $document);
+            }
+
+            //$this->attachFileToDocument($request, $id);
             return response()->json([
                 "message" => "Document created successfully.",
                 'Created document' => $document 
@@ -159,7 +166,7 @@ class DocumentController extends Controller
         ]);
     }
 
-    public function attachFileToDocument(Request $request,$id)
+    public function attachFileToDocument(Request $request, $id)
     {
         $entity = Document::find($id);
         if(!$entity){
@@ -167,12 +174,24 @@ class DocumentController extends Controller
                 "message" => "Entity Not Found"
         ],422);
         }
-        $this->uploadFile($request,$entity);
+        $this->uploadFile($request, $entity);
+        return response()->json([
+            "message" => "success"
+        ], 200);
     }
 
-    public function searchDocument()
+    public function searchDocument(Request $request)
     {
-
+        $documents = Document::latest();
+        if($request->search){
+            $documents
+            ->where('title', 'like', '%'.$request->search.'%')
+            ->orWhere('body', 'like', '%'.$request->search.'%');
+        }
+        return response()->json([
+            'message' => 'Search result',
+            'documents' => $documents->get()
+        ]);
     }
 
     private function generateUserRefCode(Document $document)
