@@ -28,6 +28,11 @@ Route::group(['middleware' => 'auth:api'], function() {
             Route::patch('/view/{documentrequest:slug}', [DocumentRequestController::class, 'processDocumentRequest']);
             Route::patch('approve-send',[DocumentRequestController::class, 'approveSendDocumentRequest']);
         });
+
+        Route::prefix('files')->group(function () {
+            Route::post('/upload-file/{id}', [DocumentController::class, 'attachFileToDocument']);
+        });
+    
     });
 
     Route::prefix('folders')->group(function () {
@@ -38,9 +43,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     });
     
     Route::prefix('files')->group(function () {
-        Route::post('/upload-file', [FolderController::class, 'uploadFile']);
-    
-        
+        Route::post('/upload-file/{id}', [DocumentController::class, 'attachFileToDocument']);
     });
 
 

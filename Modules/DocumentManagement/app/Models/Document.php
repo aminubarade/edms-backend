@@ -27,14 +27,19 @@ class Document extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function users()
+    {
+        return $this->belongsToMany(User::class);
+    }
+
     public function folder()
     {
         return $this->belongsTo(Folder::class);
     }
 
-    public function users()
-    {
-        return $this->belongsToMany(User::class);
-    }
+    // public function fileUploads()
+    // {
+    //     return $this->hasMany(FileUpload::class);
+    // }
     
 }
