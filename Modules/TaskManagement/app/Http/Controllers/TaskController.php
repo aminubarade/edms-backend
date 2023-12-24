@@ -40,7 +40,10 @@ class TaskController extends Controller
      */
     public function viewTask(Task $task)
     {
-        return $task;
+        return response()->json([
+            "message" => "success",
+            "task" => $task
+        ]);
     }
 
     /**
@@ -63,7 +66,7 @@ class TaskController extends Controller
             $task->task_title = $request->task_title;
             $task->slug = Str::slug($task->task_title);
             $task->description = $request->description;
-            $task->created_by = $request->created_by;
+            $task->created_by = Aut::user()->id;
             $task->type = $request->type;
             $task->user_id = $request->user_id;
             $task->status = $request->status;
@@ -71,7 +74,10 @@ class TaskController extends Controller
             // if($request->users == null){
                 
             // }
-            $this->assignMembers($request->users, $task);
+            if($request->users){
+                $this->assignMembers($request->users, $task);
+            }
+            
             return response()->json([
                 "message" => "Task saved successfully.",
                 'Created Task' => $task
@@ -88,6 +94,7 @@ class TaskController extends Controller
     {
 
     }
+    
     protected function removeTaskMember()
     {
 
