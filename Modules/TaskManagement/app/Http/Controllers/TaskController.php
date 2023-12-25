@@ -67,7 +67,7 @@ class TaskController extends Controller
             $task->task_title = $request->task_title;
             $task->slug = Str::slug($task->task_title);
             $task->description = $request->description;
-            $task->created_by = Aut::user()->id;
+            $task->created_by = Auth::user()->id;
             $task->type = $request->type;
             $task->user_id = $request->user_id;
             $task->status = $request->status;
