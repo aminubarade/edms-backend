@@ -11,7 +11,7 @@ use Modules\UserManagement\app\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use DB;
-use Auth;
+use Illuminate\Support\Facades\Auth;
 
 class TaskController extends Controller
 {
