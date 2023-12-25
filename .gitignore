@@ -25,7 +25,7 @@ Homestead.json
 .env.backup
 docker-compose.override.yml
 .env.staging
-/storage
+#/storage
 .env.staging
 .env.example
 package-lock.json
