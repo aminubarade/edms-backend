@@ -21,8 +21,6 @@ Route::post('auth/login', [LoginController::class, 'login']);
 
 Route::group([['prefix'=>'auth'],'middleware' => ['api']], function () {
     // your routes here
-    
-
     Route::group(['middleware' => 'auth:api'], function() {
         Route::post('logout', [LoginController::class, 'logout']);
     });

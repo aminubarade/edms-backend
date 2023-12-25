@@ -24,6 +24,7 @@ class LoginController extends BaseController
                 'message'=> "successfully logged in",
                 'user' => $user
             
+                
             ], 200); 
         } 
         else{ 
