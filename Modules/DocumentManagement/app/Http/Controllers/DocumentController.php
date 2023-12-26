@@ -62,9 +62,9 @@ class DocumentController extends Controller
             if($request->users){
                 $document->users()->attach($request->users); 
             }
-            if($request->files){
-                $this->attachFileToDocument($request, $document);
-            }
+            // if($request->files){
+            //     $this->attachFileToDocument($request, $document);
+            // }
 
             //$this->attachFileToDocument($request, $id);
             return response()->json([
