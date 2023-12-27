@@ -29,7 +29,7 @@ class TaskController extends Controller
 
     public function getUserTasks(User $user)
     {
-        $tasks = $user->tasks;
+        $tasks = $user->tasks()->get();
         return response()->json([
             'message' => 'All task fetched',
             'tasks' => $tasks

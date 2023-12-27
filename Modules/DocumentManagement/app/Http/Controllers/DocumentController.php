@@ -76,10 +76,13 @@ class DocumentController extends Controller
 
     public function viewDocument(Document $document)
     {
+        $user = User::find($document->created_by);
         return response()->json([
             'message' => 'viewing document',
             'document' => $document,
-            'members' => $document->users()->get()
+            'created_by'=> $user->username,
+            'members' => $document->users()->get(),
+            'comments' => $document->comments()->get()
         ]);
     }
 
@@ -201,4 +204,6 @@ class DocumentController extends Controller
         $document->document_ref=  self::DOCUMENT_REFERENCE_CODE_PREFIX.$incrementId;
         $document->save();
     }
+
+
 }

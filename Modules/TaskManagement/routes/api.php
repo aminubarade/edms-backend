@@ -27,7 +27,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     Route::prefix('tasks')->group(function () {
         Route::get('/view-all', [TaskController::class, 'getTasks']);
         Route::get('/view-task/{task:slug}', [TaskController::class, 'viewTask']);
-        Route::get('/view-user-tasks/{task:slug}', [TaskController::class, 'getUserTasks']);
+        Route::get('/view-user-tasks/{user:username}', [TaskController::class, 'getUserTasks']);
         Route::post('/save-task', [TaskController::class, 'storeTask']);
         Route::put('/update-task/{task:slug}', [TaskController::class, 'updateTask']);
         Route::delete('/delete-task/{task:slug}', [TaskController::class, 'deleteTask']);

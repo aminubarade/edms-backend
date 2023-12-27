@@ -19,7 +19,7 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::delete('/delete/{document:slug}', [DocumentController::class, 'deleteDocument']);
         Route::post('/add-to-task/{document:slug}', [DocumentController::class, 'addDocumentToTask']);
         Route::post('/move-to-folder/{document:slug}', [DocumentController::class, 'moveDocumentToFolder']);
-        Route::get('/{document:slug}/comments/view-all', [DocumentController::class, 'getDocumentComments']);
+        Route::get('/{document:slug}/comments/view-all', [CommentController::class, 'getDocumentComments']);
     
         Route::prefix('requests')->group(function () {
             Route::get('/', [DocumentRequestController::class, 'getDocumentRequests']);

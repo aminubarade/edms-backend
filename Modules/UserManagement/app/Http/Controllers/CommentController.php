@@ -11,6 +11,7 @@ use Modules\DocumentManagement\app\Models\Document;
 use Modules\TaskManagement\app\Models\Task;
 use Modules\UserManagement\app\Models\User;
 use Illuminate\Support\Facades\Validator;
+use Auth;
 
 class CommentController extends Controller
 {
@@ -27,10 +28,9 @@ class CommentController extends Controller
         );
     }
 
-
     public function getUserComments(User $user){
         return response()->json([
-            'message' => 'Tasks comments fetched',
+            'message' => 'Comments fetched',
             'task_comments' => $user->comments
         ]);
     }
@@ -45,7 +45,7 @@ class CommentController extends Controller
     public function getDocumentComments(Document $document){
         return response()->json([
             'message' => 'Document comments fetched',
-            'task_comments' => $document->comments
+            'Document_comments' => $document->comments
         ]);
     }
     
@@ -65,7 +65,7 @@ class CommentController extends Controller
         {
             $comment = new Comment;
             $comment->body = $request->body;
-            $comment->user_id = $request->user_id;
+            $comment->user_id = Auth::user()->id;
             $comment->task_id = $request->task_id;
             $comment->document_id = $request->document_id;
             $comment->save();
@@ -87,7 +87,7 @@ class CommentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id): RedirectResponse
+    public function update(Request $request, $id)
     {
         //
     }
