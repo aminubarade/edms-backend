@@ -36,9 +36,6 @@ class TaskController extends Controller
         ]);
     } 
 
-        /**
-     * Show the specified resource.
-     */
     public function viewTask(Task $task)
     {
         return response()->json([

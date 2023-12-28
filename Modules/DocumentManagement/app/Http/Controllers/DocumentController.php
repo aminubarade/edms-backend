@@ -127,8 +127,8 @@ class DocumentController extends Controller
         if($document->slug)
         {
             $document->completed_by = auth()->user()->id;
-            $document->is_active = 0;
             $document->status = $request->status;
+            if($document->status = 'complete'){$document->is_active = 0;}
             $document->update();
             return response()->json([
                 "message" => "document status update"
@@ -204,6 +204,4 @@ class DocumentController extends Controller
         $document->document_ref=  self::DOCUMENT_REFERENCE_CODE_PREFIX.$incrementId;
         $document->save();
     }
-
-
 }
