@@ -31,17 +31,12 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::post('/assign-tasks', [UserManagementController::class, 'assignTaskToUser']);
         Route::get('/{user:username}/comments/view-all', [CommentController::class, 'getUserComments']);//fetch
     });
+    Route::prefix('comments')->group(function () {
+        Route::get('/view-all', [CommentController::class, 'getComments']);
+        Route::post('/add-comment', [CommentController::class, 'addComment']);
+    });
 });
 
-
-
-
-    
-
-Route::prefix('comments')->group(function () {
-    Route::get('/view-all', [CommentController::class, 'getComments']);
-    Route::post('/add-comment', [CommentController::class, 'addComment']);
-});
 
 Route::prefix('notifications')->group(function () {
     Route::get('/viewAll', [NotificationController::class, 'viewAll']);
