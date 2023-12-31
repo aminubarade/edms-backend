@@ -18,7 +18,10 @@ class UserManagementController extends Controller
     {
         //import users
         $users = User::all();
-        return response()->json($users);
+        return response()->json([
+            "message" => "success",
+            "users" => $users->sortByDesc("created_at")
+        ]);
     }
 
     public function saveUser(Request $request)

@@ -110,6 +110,7 @@ class DocumentController extends Controller
         //
         if($document->slug)
         {
+            $document->users()->detach();
             $document->delete();
             return response()->json([
                 "message" => "Document Deleted"
