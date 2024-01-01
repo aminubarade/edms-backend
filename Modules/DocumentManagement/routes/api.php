@@ -15,7 +15,7 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::get('/view/{document:slug}', [DocumentController::class, 'viewDocument']);
         Route::post('/save', [DocumentController::class, 'saveDocument']);
         Route::put('/update/{document:slug}', [DocumentController::class, 'updateDocument']);
-        Route::put('/update-status/{document:slug}', [DocumentController::class, 'completeDocument']);
+        Route::patch('/update-status/{document:slug}', [DocumentController::class, 'completeDocument']);
         Route::delete('/delete/{document:slug}', [DocumentController::class, 'deleteDocument']);
         Route::post('/add-to-task/{document:slug}', [DocumentController::class, 'addDocumentToTask']);
         Route::post('/move-to-folder/{document:slug}', [DocumentController::class, 'moveDocumentToFolder']);
