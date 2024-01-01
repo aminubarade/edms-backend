@@ -129,7 +129,7 @@ class DocumentController extends Controller
         {
             $document->completed_by = auth()->user()->id;
             $document->status = $request->status;
-            if($document->status = 'complete'){$document->is_active = 0;}
+            if($document->status === 'complete'){$document->is_active = 0;}
             $document->update();
             return response()->json([
                 "message" => "document status update"
