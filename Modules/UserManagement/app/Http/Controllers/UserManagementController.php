@@ -65,6 +65,8 @@ class UserManagementController extends Controller
             $user->rank = $request->rank;
             $user->service_number = $request->service_number;
             $user->appt = $request->appt;//appt table
+            $user->unit = $request->unit;
+            $user->command = $request->command;//appt table
             $user->service = $request->service;
             $user->department_id = $request->department_id;
             $user->is_active = $request->is_active;
@@ -90,6 +92,8 @@ class UserManagementController extends Controller
             $user->lastname = is_null($request->lastname) ? $user->lastname : $request->lastname; 
             $user->phone = is_null($request->phone) ? $user->phone : $request->phone; 
             $user->email = is_null($request->email) ? $user->email : $request->email; 
+            $user->unit = is_null($request->unit) ? $user->unit : $request->unit; 
+            $user->command = is_null($request->command) ? $user->command : $request->command; 
             $user->password = is_null($request->password) ? $user->password : $request->password; 
             $user->department_id = is_null($request->department_id) ? $user->department_id : $request->department_id; 
             $user->update();
