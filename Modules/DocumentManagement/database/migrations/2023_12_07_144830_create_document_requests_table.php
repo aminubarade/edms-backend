@@ -15,9 +15,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('document_id');
             $table->string('title');
+            $table->string('slug');
             $table->foreignId('request_from');
             $table->foreignId('request_to');
             $table->string('request_status')->default('pending');
+            $table->foreignId('originated_by');
             $table->foreignId('treated_by')->nullable();
             $table->boolean('is_active')->default(0);
             $table->string('remark')->nullable();
@@ -27,9 +29,6 @@ return new class extends Migration
         });
     }
 
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('document_requests');

@@ -20,6 +20,7 @@ Route::group(['middleware' => 'auth:api'], function() {
         Route::post('/add-to-task/{document:slug}', [DocumentController::class, 'addDocumentToTask']);
         Route::post('/move-to-folder/{document:slug}', [DocumentController::class, 'moveDocumentToFolder']);
         Route::get('/{document:slug}/comments/view-all', [CommentController::class, 'getDocumentComments']);
+        Route::get('/remove-users/{document:slug}', [CommentController::class, 'getDocumentComments']);
     
         Route::prefix('requests')->group(function () {
             Route::get('/', [DocumentRequestController::class, 'getDocumentRequests']);
@@ -34,19 +35,14 @@ Route::group(['middleware' => 'auth:api'], function() {
         });
     
     });
-
     Route::prefix('folders')->group(function () {
         Route::get('/{department:slug}/view-all', [FolderController::class, 'getDeptFolders']);
         Route::get('/view/{folder:slug}/', [FolderController::class, 'viewFolder']);
         Route::post('/create-folder', [FolderController::class, 'createFolder']);
         Route::put('/update/{folder:slug}', [FolderController::class, 'updateFolder']);
     });
-    
     Route::prefix('files')->group(function () {
         Route::post('/upload-file/{id}', [DocumentController::class, 'attachFileToDocument']);
     });
-
-
-
 });
 
