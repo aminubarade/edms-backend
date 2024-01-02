@@ -47,6 +47,7 @@ class DocumentRequestController extends Controller
             $members = [$request->request_to];
         }
         $documentRequest->users()->attach(array_unique($members));
+        $this->setIsActive($documentRequest->document_id);
         return response()->json([
             "message" => "Document request sent",
             "documentRequest" => $documentRequest
@@ -111,7 +112,15 @@ class DocumentRequestController extends Controller
             "documentRequest" => $documentRequest
 
         ], 200);
+    }
 
+    private function setIsActive($id)
+    {
+        $document = Document::find($id);
+        if($document){
+            $document->is_active = 0;
+            $document->save();
+        }
     }
 
     public function searchDocumentRequest(DocumentReequest $documentRequest)
