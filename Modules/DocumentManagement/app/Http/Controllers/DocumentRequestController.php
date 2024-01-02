@@ -30,7 +30,7 @@ class DocumentRequestController extends Controller
         $documentRequest->title = $request->title;
         $documentRequest->slug = Str::slug($documentRequest->title);//new
         $documentRequest->request_from = $request->request_from;
-        if($documentRequest->request_from == Auth::user()->id){$documentRequest->is_active = 1;}//is active new
+        if($documentRequest->request_from === Auth::user()->id){$documentRequest->is_active = 1;}//is active new
         $documentRequest->request_to = $request->request_to;
         $documentRequest->request_status = $request->request_status;
         $documentRequest->document_id = $request->document_id;
@@ -52,6 +52,16 @@ class DocumentRequestController extends Controller
             "documentRequest" => $documentRequest
         ]);
     }
+
+    public function removeDocumentRequestMember(Request $request, DocumentRequest $documentRequest)
+    {
+         $documentRequest->users()->detach($request->users);
+         return response()->json([
+            "message" => "Successfully removed",
+            'members' => $documentRequest->users()->get()
+         ]);
+    }
+
     public function updateDocumentRequest(){
         // php
     }
@@ -74,6 +84,9 @@ class DocumentRequestController extends Controller
             $documentRequest->remark= $request->remark;
             $documentRequest->request_status = $request->request_status;
             $documentRequest->update();
+            if($request->copies){
+                $documentRequest->users()->attach($request->copies);
+            }
             return response()->json([
                 "message" => "document status update"
             ],201);

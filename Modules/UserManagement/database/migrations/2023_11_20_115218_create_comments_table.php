@@ -15,8 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('body');
             $table->foreignId('user_id');
-            $table->foreignId('task_id');
-            $table->foreignId('document_id');
+            $table->foreignId('task_id')->nullable();
+            $table->foreignId('document_id')->nullable();
             $table->timestamps();
         });
     }

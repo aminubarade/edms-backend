@@ -145,6 +145,15 @@ class DocumentController extends Controller
             'members' => $document->users()->get()
          ]);
     }
+    
+    public function removeDocumentMember(Request $request, Document $documents)
+    {
+         $document->users()->detach($request->users);
+         return response()->json([
+            "message" => "Successfully removed",
+            'members' => $document->users()->get()
+         ]);
+    }
 
     public function addDocumentToTask(Document $document)
     {
