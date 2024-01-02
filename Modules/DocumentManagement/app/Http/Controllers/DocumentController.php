@@ -95,6 +95,7 @@ class DocumentController extends Controller
             $document->type = is_null($request->type) ? $document->type : $request->type; 
             $document->classification = is_null($request->classification) ? $document->classification : $request->classification; 
             $document->body = is_null($request->body) ? $document->body: $request->body; 
+            $document->status = is_null($request->status) ? $document->status: $request->status; 
             $document->updated_by = Auth::user()->id;
             //remove update member
             $document->update();
@@ -145,7 +146,7 @@ class DocumentController extends Controller
             'members' => $document->users()->get()
          ]);
     }
-    
+
     public function removeDocumentMember(Request $request, Document $documents)
     {
          $document->users()->detach($request->users);
