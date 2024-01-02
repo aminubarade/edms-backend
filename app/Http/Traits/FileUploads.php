@@ -30,4 +30,17 @@ trait FileUploads
         //$file->move($filePath, $fileName);
         //$fileUpload->facility_id   = $entity->facility_id;
     }
+
+    public function downloadFile ($id){
+        $attachment = FileUpload::find($id);
+        $file = 'uploads/'.$attachment->fileName;
+        $fileExists = Storage::exists($file);
+        if($fileExists){
+            return Storage::download($file, $attachment->fileName);
+        }else{
+            return response()->json([
+                "message" => "File not Found"
+            ]);
+        }
+    }
 }
