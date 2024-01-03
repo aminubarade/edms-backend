@@ -16,11 +16,11 @@ class DocumentRequestController extends Controller
 {
     public function getDocumentRequests()
     {
-        $user = User::find(auth()->user()->id);
+        $user = User::find(Auth::user()->id);
         $documentRequests = $user->documentRequests;
         return response()->json([
-            "message" => "all document requests fetched",
-            "requests" =>  $documentRequests
+            'message' => 'all document requests fetched',
+            'requests' =>  $documentRequests
         ]);
     }
 
