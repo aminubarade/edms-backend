@@ -96,7 +96,12 @@ class DocumentRequestController extends Controller
 
     public function viewDocumentRequest(DocumentRequest $documentRequest)
     {
-        return $documentRequest;
+        $document = Document::find($documentRequest->document_id);
+        return response()->json([
+            "message" => "fetched",
+            'documentRequest' => $documentRequest,
+            'document' => $document
+        ]);
     }
 
     public function retractDocumentRequest(DocumentReequest $documentRequest)
