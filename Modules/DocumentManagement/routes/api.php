@@ -24,9 +24,10 @@ Route::group(['middleware' => 'auth:api'], function() {
     
         Route::prefix('requests')->group(function () {
             Route::get('/', [DocumentRequestController::class, 'getDocumentRequests']);
+            Route::view('/view/{documentrequest:slug}', [DocumentRequestController::class, 'viewDocumentRequest']);
             Route::post('/send', [DocumentRequestController::class, 'sendDocumentRequest']);
             Route::patch('/process/{id}', [DocumentRequestController::class, 'processDocumentRequest']);
-            Route::patch('/view/{documentrequest:slug}', [DocumentRequestController::class, 'processDocumentRequest']);
+            //Route::patch('/view/{documentrequest:slug}', [DocumentRequestController::class, 'processDocumentRequest']);
             Route::patch('approve-send',[DocumentRequestController::class, 'approveSendDocumentRequest']);
         });
 
