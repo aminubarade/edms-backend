@@ -20,7 +20,7 @@ class UserManagementController extends Controller
         $users = User::all();
         return response()->json([
             "message" => "success",
-            "users" => $users->sortByDesc("created_at")
+            "users" => $users
         ]);
     }
 
