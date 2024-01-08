@@ -35,6 +35,14 @@ class TaskController extends Controller
             'tasks' => $tasks
         ]);
     } 
+    public function getTaskUsers(Task $task)
+    {
+        $users = $task->users()->get();
+        return response()->json([
+            'message' => 'All task members fetched',
+            'tasks' => $users
+        ]);
+    } 
 
     public function viewTask(Task $task)
     {
