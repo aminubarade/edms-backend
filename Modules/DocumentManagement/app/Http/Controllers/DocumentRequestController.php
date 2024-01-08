@@ -42,9 +42,10 @@ class DocumentRequestController extends Controller
         if($request->copies){
             $members = $request->copies;
             array_push($members, $request->request_to);
+            array_push($members, $request->request_from);
         }
         else{
-            $members = [$request->request_to];
+            $members = [$request->request_to, $request->request_from];
         }
         $documentRequest->users()->attach(array_unique($members));
         $this->setIsActive($documentRequest->document_id);

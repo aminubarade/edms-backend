@@ -67,11 +67,11 @@ class DocumentClassController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function deleteDocumentClass(DocumentClass $DocumentClass)
+    public function deleteDocumentClass(DocumentClass $documentClass)
     {
-        if($DocumentClass->slug)
+        if($documentClass->slug)
         {
-            $DocumentClass->delete();
+            $documentClass->delete();
             return response()->json([
                 "message" => "DocumentClass Deleted"
             ], 200);

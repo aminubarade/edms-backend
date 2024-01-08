@@ -13,12 +13,13 @@ trait FileUploads
     public function uploadFile(Request $request, $entity)
     {
         $file = $request->file('file');
-        $fileName = 'File'.time().'.'.$file->extension();
+        $fileName = $request->name.$file->extension();
         $path = 'uploads';
         $file->storeAs($path, $fileName);
         $fileUpload 			   = new FileUpload();
         $fileUpload->uploaded_by   = Auth::user()->id;
         $fileUpload->entity_id     = $entity->id;
+        $fileUpload->entity_type   = get_class($entity);
         $fileUpload->file_size     = round($file->getSize()/1000000,2); //convert file size to mb
         $fileUpload->save();
         return response()->json([
@@ -29,6 +30,11 @@ trait FileUploads
         //$filePath = public_path(). '/files';
         //$file->move($filePath, $fileName);
         //$fileUpload->facility_id   = $entity->facility_id;
+    }
+
+    public function getAllFIles()
+    {
+
     }
 
     public function downloadFile ($id){
