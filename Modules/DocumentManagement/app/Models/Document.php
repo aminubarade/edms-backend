@@ -37,9 +37,9 @@ class Document extends Model
         return $this->belongsTo(Folder::class);
     }
 
-    // public function fileUploads()
-    // {
-    //     return $this->hasMany(FileUpload::class);
-    // }
+    public function fileUploads()
+    {
+        return $this->morphToMany(FileUpload::class, 'entity');
+    }
     
 }

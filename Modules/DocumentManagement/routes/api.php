@@ -45,6 +45,7 @@ Route::group(['middleware' => 'auth:api'], function() {
     });
     Route::prefix('files')->group(function () {
         Route::post('/upload-file/{id}', [DocumentController::class, 'attachFileToDocument']);
+        Route::post('/upload-file/download/{id}', [DocumentController::class, 'downloadDocumentFile']);
     });
 });
 

@@ -37,8 +37,8 @@ Route::prefix('settings')->group(function () {
     Route::prefix('document-class')->group(function () {
         Route::post('create', [DocumentClassController::class, 'createDocumentClass']);
         Route::get('view-all', [DocumentClassController::class, 'getAllDocumentClasses']);
-        Route::put('/update/{document-class:slug}/', [DocumentClassController::class, 'updateDocumentClass']);
-        Route::delete('delete/{document-class:slug}', [DocumentClassController::class, 'deleteDocumentClass']);
+        Route::put('/update/{documentClass:slug}/', [DocumentClassController::class, 'updateDocumentClass']);
+        Route::delete('/delete/{documentClass:slug}', [DocumentClassController::class, 'deleteDocumentClass']);
     });
 
     Route::prefix('document-type')->group(function () {
