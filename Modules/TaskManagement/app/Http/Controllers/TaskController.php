@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Modules\TaskManagement\app\Models\Task;
+use Modules\DocumentManagement\app\Models\Document;
 use Modules\UserManagement\app\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -48,7 +49,10 @@ class TaskController extends Controller
     {
         return response()->json([
             "message" => "success",
-            "task" => $task
+            "task" => $task,
+            'documents' => $task->documents,
+            'members' => $task->users()->get(),
+            'comments' => $task->comments()->get()
         ]);
     }
 

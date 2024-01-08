@@ -4,6 +4,7 @@ namespace Modules\DocumentManagement\app\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Modules\UserManagement\app\Models\User;
+use Modules\TaskManagement\app\Models\Task;
 use Modules\UserManagement\app\Models\Comment;
 use Modules\DocumentManagement\app\Models\Folder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -35,6 +36,10 @@ class Document extends Model
     public function folder()
     {
         return $this->belongsTo(Folder::class);
+    }
+    public function task()
+    {
+        return $this->belongsTo(Task::class);
     }
 
     public function fileUploads()
