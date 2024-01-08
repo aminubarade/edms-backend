@@ -27,7 +27,7 @@ class DocumentTypeController extends Controller
     public function createDocumentType(Request $request)
     {
         $validated = Validator::make($request->all(),[
-            'DocumentType_name' => 'required'
+            'documentType_name' => 'required'
         ]);
         if($validated->fails())
         {
