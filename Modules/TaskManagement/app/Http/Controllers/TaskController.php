@@ -21,7 +21,9 @@ class TaskController extends Controller
      */
     public function getTasks()
     {
-        $tasks = Task::all();
+        $user = User::find(Auth::user()->id);
+        $tasks = $user->tasks;
+        //$tasks = Task::all();
         return response()->json([
             'message' => 'All task fetched',
             'tasks' => $tasks
