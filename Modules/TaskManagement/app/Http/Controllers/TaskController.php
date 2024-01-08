@@ -20,7 +20,7 @@ class TaskController extends Controller
      */
     public function getTasks()
     {
-        $tasks = Task::all();//where task$task id = created by or task$task ID in members
+        $tasks = Task::all();
         return response()->json([
             'message' => 'All task fetched',
             'tasks' => $tasks
